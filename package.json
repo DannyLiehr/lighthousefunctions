@@ -1,0 +1,19 @@
+{
+  "name": "lighthousefunctions",
+  "version": "1.0.0",
+  "description": "A set of functions I use frequently in most of my projects.",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DannyLiehr/lighthousefunctions.git"
+  },
+  "author": "Lighthouse System",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DannyLiehr/lighthousefunctions/issues"
+  },
+  "homepage": "https://github.com/DannyLiehr/lighthousefunctions#readme"
+}
