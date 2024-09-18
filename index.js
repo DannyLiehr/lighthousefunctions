@@ -19,14 +19,16 @@ export function truncate(str, n = 8) {
 }
 
 /**
- * Capitalises the first letter of a string
- * @param {string} s String that needs capitalised
- * @returns {string} Capitalised string 
+ * Capitalises the first letter of a string.
+ * @param {string} s String that needs capitalised.
+ * @returns {string} Capitalised string or an empty string if input is not a string.
  */
-export function capitalise(s){
-	if (!s) return s;
-	return s[0].toUpperCase() + s.slice(1);
+export function capitalise(s) {
+    if (typeof s !== 'string') return '';
+    if (!s) return s; // Handle empty string case
+    return s[0].toUpperCase() + s.slice(1);
 }
+
 
 /**
  * Retrieves the key associated with a given value in an object.
@@ -87,4 +89,47 @@ export function probability(prob=0.5) {
     
     // Return true if the random value is less than the probability
     return randomValue < prob;
+}
+
+/**
+ * Turns an array into a list styled like the following: Item 1, Item 2, and Item 3
+ * Optionally includes the Oxford comma before the 'and'.
+ * 
+ * @param {Array} arr The array of items to convert to a string.
+ * @param {boolean} [useOxfordComma=true] Whether to include the Oxford comma (default is true).
+ * @returns {string} The formatted string.
+ */
+export function makeString(arr, useOxfordComma = true) {
+    if (arr.length === 0) return ''; // Handle empty array case
+    if (arr.length === 1) return arr[0];
+
+    const firsts = arr.slice(0, arr.length - 1);
+    const last = arr[arr.length - 1];
+
+    // Join the first items with a comma
+    let result = firsts.join(', ');
+
+    // If using the Oxford comma and there are at least two items, add it
+    if (useOxfordComma && firsts.length > 0) {
+        result += ',';
+    }
+
+    // Add the last item with 'and'
+    return result + ' and ' + last;
+}
+
+/**
+ * Creates a comparison function for sorting objects by a specified property.
+ *
+ * @param {string} property The property name to compare.
+ * @returns {function} A comparison function that can be used with Array.prototype.sort().
+ * @throws {Error} Throws an error if the property does not exist on one of the objects.
+ */
+export function compareByProperty(property) {
+    return function(a, b) {
+        if (a[property] === undefined || b[property] === undefined) {
+            throw new Error(`Property "${property}" does not exist on one of the objects.`);
+        }
+        return a[property] - b[property];
+    };
 }
