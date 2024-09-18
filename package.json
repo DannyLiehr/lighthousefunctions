@@ -1,6 +1,6 @@
 {
   "name": "lighthousefunctions",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A set of functions I use frequently in most of my projects.",
   "main": "index.js",
   "scripts": {
