@@ -173,3 +173,127 @@ export async function downloadFile(fileURL, downloadPath, fileType) {
         throw error; // Re-throw for further handling
     }
 }
+
+/**
+ * Sums all the valid numbers in an array.
+ * @param {Array} values The array of values to sum.
+ * @returns {number} The sum of the valid numbers in the array.
+ */
+export function sumArray(values) {
+    return values.reduce((accumulator, currentValue) => {
+        // Check if currentValue is a number
+        if (typeof currentValue === 'number') {
+            return accumulator + currentValue;
+        }
+        return accumulator; // Ignore non-number values
+    }, 0);
+}
+
+/**
+ * Analyzes an array and returns statistical information. Only numeric values are processed.
+ * @param {Array} array - An array of values to process.
+ * @returns {Object} An object containing statistical information, including mean, median, mode, range, variance, skewness, interquartile range, and quartiles.
+ */
+
+export function analyzeArray(array) {
+    // Filter out non-numeric values
+    const numericArray = array.filter(value => typeof value === 'number');
+
+    if (numericArray.length === 0) {
+        return {
+            "interquartileRange": null,
+            "mean": null,
+            "median": null,
+            "mode": null,
+            "quartiles": [],
+            "range": null,
+            "skewness": null,
+            "variance": null,
+        };
+    }
+
+    let max = -Infinity;
+    let min = Infinity;
+    let sum = 0;
+    const frequency = {};
+    const quartiles = [];
+    const n = numericArray.length;
+
+    for (let i = 0; i < n; i++) {
+        const value = numericArray[i];
+
+        // Update max and min
+        if (value > max) {
+            max = value;
+        }
+        if (value < min) {
+            min = value;
+        }
+
+        // Calculate sum for mean
+        sum += value;
+
+        // Count frequency for mode
+        if (frequency[value]) {
+            frequency[value]++;
+        } else {
+            frequency[value] = 1;
+        }
+    }
+
+    // Calculate mean
+    const mean = sum / n;
+
+    // Calculate variance
+    let varianceSum = 0;
+    for (let i = 0; i < n; i++) {
+        varianceSum += Math.pow(numericArray[i] - mean, 2);
+    }
+    const variance = varianceSum / n; // Use n - 1 for sample variance
+
+    // Calculate standard deviation
+    const standardDeviation = Math.sqrt(variance);
+
+    // Calculate skewness
+    let skewnessSum = 0;
+    for (let i = 0; i < n; i++) {
+        skewnessSum += Math.pow(numericArray[i] - mean, 3);
+    }
+    const skewness = (n / ((n - 1) * (n - 2))) * (skewnessSum / Math.pow(standardDeviation, 3));
+
+    // Calculate median
+    const sortedArray = [...numericArray].sort((a, b) => a - b);
+    const mid = Math.floor(sortedArray.length / 2);
+    const median = sortedArray.length % 2 === 0 
+        ? (sortedArray[mid - 1] + sortedArray[mid]) / 2 
+        : sortedArray[mid];
+
+    // Calculate mode
+    let mode = [];
+    let maxFrequency = 0;
+    for (const key in frequency) {
+        if (frequency[key] > maxFrequency) {
+            maxFrequency = frequency[key];
+            mode = [Number(key)];
+        } else if (frequency[key] === maxFrequency) {
+            mode.push(Number(key));
+        }
+    }
+
+    // Calculate quartiles
+    const q1 = sortedArray[Math.floor((sortedArray.length / 4))];
+    const q2 = median; // Q2 is the median
+    const q3 = sortedArray[Math.floor((sortedArray.length * 3) / 4)];
+    quartiles.push(q1, q2, q3);
+
+    return {
+        "interquartileRange": q3 - q1,
+        "mean": mean,
+        "median": median,
+        "mode": mode,
+        "quartiles": quartiles,
+        "range": max - min,
+        "skewness": skewness,
+        "variance": variance,
+    };
+}

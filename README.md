@@ -114,3 +114,57 @@ downloadFile('https://example.com/file', 'path/to/save/file', 'jpg')
     .then(path => console.log(`File downloaded to: ${path}`))
     .catch(err => console.error(err));
 ```
+### `sumArray(values)`
+Sums all the valid numbers in an array.
+
+Example usage:
+```js
+const mixedArray = [1, 2, 'Hello', 3, { key: 'value' }, 4, 5];
+const total = sumArray(mixedArray);
+console.log(`The sum of the valid numbers is: ${total}`); // Output: The sum of the valid numbers is: 15
+
+```
+
+### `analyzeArray(values)`
+Analyzes an array and returns statistical information. Only numeric values are processed. Returns an object containing statistical information, including mean, median, mode, range, variance, skewness, interquartile range, and quartiles.
+
+Example usage:
+```js
+const dataArray = [1, 2, 2, 3, 4, 5, 5, 5, 6, 7, 8, 9, 10];
+
+// Call the analyzeArray function with the dataArray
+const analysisResult = analyzeArray(dataArray);
+
+// Log the results
+console.log("Statistical Analysis Result:");
+
+// Mean: The average value of the array. Useful for understanding the overall trend or central value.
+console.log(`Mean: ${analysisResult.mean}`);
+
+// Median: The middle value when the array is sorted. Important for understanding the center of the data, especially when there are outliers.
+console.log(`Median: ${analysisResult.median}`);
+
+// Mode: The most frequently occurring value in the array. Helpful for identifying the most common item in the dataset.
+console.log(`Mode: ${analysisResult.mode}`);
+
+// Range: The difference between the maximum and minimum values. Useful for understanding the spread of the data.
+console.log(`Range: ${analysisResult.range}`);
+
+// Variance: Measures how far the values are spread out from the mean. Important for assessing the variability in the dataset.
+console.log(`Variance: ${analysisResult.variance}`);
+
+// Standard Deviation: The square root of the variance. Provides a measure of dispersion in the same units as the data, making it easier to interpret.
+console.log(`Standard Deviation: ${Math.sqrt(analysisResult.variance)}`);
+
+// Skewness: Indicates the asymmetry of the distribution. Useful for understanding the direction and degree of skew in the data.
+console.log(`Skewness: ${analysisResult.skewness}`);
+
+// Interquartile Range: The range between the first and third quartiles. Useful for understanding the spread of the middle 50% of the data, reducing the impact of outliers.
+console.log(`Interquartile Range: ${analysisResult.interquartileRange}`);
+
+// Quartiles: Values that divide the dataset into four equal parts. Helpful for understanding the distribution and spread of the data.
+console.log(`Quartiles: ${analysisResult.quartiles}`);
+
+
+```
+
