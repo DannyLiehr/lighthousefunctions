@@ -105,3 +105,12 @@ const itemsByName = [
 itemsByName.sort(compareByProperty('name'));
 console.log(itemsByName);
 ```
+### `downloadFile(fileURL, downloadPath, fileType)`
+Downloads a file from a given URL.
+
+Example usage:
+```js
+downloadFile('https://example.com/file', 'path/to/save/file', 'jpg')
+    .then(path => console.log(`File downloaded to: ${path}`))
+    .catch(err => console.error(err));
+```

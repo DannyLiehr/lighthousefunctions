@@ -1,3 +1,6 @@
+const fs = require('fs').promises;
+const request = require('request'); // For the downloadFile function
+
 /**
  * Picks a random item from an array.
  * @param {array} arr An array. 
@@ -132,4 +135,41 @@ export function compareByProperty(property) {
         }
         return a[property] - b[property];
     };
+}
+
+
+/**
+ * Downloads a file from a given URL.
+ * @param {string} fileURL The base URL of the file to download (without extension).
+ * @param {string} downloadPath The path where the file should be saved (without extension).
+ * @param {string} fileType The type of the file (e.g., 'csv', 'jpg', etc.).
+ * @returns {Promise<string>} The path where the file was saved, including the file extension.
+ */
+export async function downloadFile(fileURL, downloadPath, fileType) {
+    try {
+        // Construct the full URL with the file type and cache-busting parameter
+        const fullURL = `${fileURL}.${fileType}?t=${new Date().getTime()}`;
+        
+        const { response, body } = await new Promise((resolve, reject) => {
+            request(fullURL, (error, response, body) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve({ response, body }); // Resolve with both response and body
+                }
+            });
+        });
+
+        if (response.statusCode !== 200) { // Access statusCode directly from response
+            throw new Error(`Failed to download file: Status code ${response.statusCode}`);
+        }
+
+        // Write the file to the specified path with the correct extension
+        await fs.writeFile(`${downloadPath}.${fileType}`, body, { flag: 'w' });
+
+        return `${downloadPath}.${fileType}`;
+    } catch (error) {
+        console.error(`Error downloading ${fileType}:`, error);
+        throw error; // Re-throw for further handling
+    }
 }

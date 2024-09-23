@@ -1,6 +1,6 @@
 {
   "name": "lighthousefunctions",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A set of functions I use frequently in most of my projects.",
   "main": "index.js",
   "scripts": {
@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/DannyLiehr/lighthousefunctions/issues"
   },
-  "homepage": "https://github.com/DannyLiehr/lighthousefunctions#readme"
+  "homepage": "https://github.com/DannyLiehr/lighthousefunctions#readme",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "request": "^2.88.2"
+  }
 }
