@@ -6,7 +6,7 @@ const request = require('request'); // For the downloadFile function
  * @param {array} arr An array. 
  * @returns {*} A random item from the array.
  */
-export function randomise(arr){
+function randomise(arr){
     return arr[Math.floor(Math.random()*arr.length)];
 }
 
@@ -17,7 +17,7 @@ export function randomise(arr){
  * @param {number} [n=8] The number of characters to truncate to (default is 8).
  * @returns {string} The truncated string.
  */
-export function truncate(str, n = 8) {
+function truncate(str, n = 8) {
     return (str.length > n) ? str.slice(0, n - 1) + '...' : str;
 }
 
@@ -26,7 +26,7 @@ export function truncate(str, n = 8) {
  * @param {string} s String that needs capitalised.
  * @returns {string} Capitalised string or an empty string if input is not a string.
  */
-export function capitalise(s) {
+function capitalise(s) {
     if (typeof s !== 'string') return '';
     if (!s) return s; // Handle empty string case
     return s[0].toUpperCase() + s.slice(1);
@@ -41,7 +41,7 @@ export function capitalise(s) {
  * @param {*} value The value to find the corresponding key for.
  * @returns {string|undefined} The key associated with the value, or undefined if not found.
  */
-export function getKeyByValue(object, value) {
+function getKeyByValue(object, value) {
     return Object.keys(object).find(key => object[key] === value);
 }
 
@@ -51,7 +51,7 @@ export function getKeyByValue(object, value) {
  * @param {number} [max=10] max Maximum value. (Default: 10)
  * @returns {number} A number between the minimum and maximum value
  */
-export function getRandomNumber(min = 1, max = 10) {
+function getRandomNumber(min = 1, max = 10) {
     // Ensure both arguments are numbers
     if (typeof min !== "number" || typeof max !== "number") {
         throw new Error("Lighthouse Function Error - getRandomNumber: Min and Max arguments need to both be numbers.");
@@ -76,7 +76,7 @@ export function getRandomNumber(min = 1, max = 10) {
  * @returns {boolean} Returns true if the event occurs, false otherwise.
  * @throws {Error} Throws an error if the probability is not a number or not between 0 and 1.
  */
-export function probability(prob=0.5) {
+function probability(prob=0.5) {
     // Ensure the probability is a number
     if (typeof prob !== "number") {
         throw new Error("Probability must be a number");
@@ -102,7 +102,7 @@ export function probability(prob=0.5) {
  * @param {boolean} [useOxfordComma=true] Whether to include the Oxford comma (default is true).
  * @returns {string} The formatted string.
  */
-export function makeString(arr, useOxfordComma = true) {
+function makeString(arr, useOxfordComma = true) {
     if (arr.length === 0) return ''; // Handle empty array case
     if (arr.length === 1) return arr[0];
 
@@ -128,7 +128,7 @@ export function makeString(arr, useOxfordComma = true) {
  * @returns {function} A comparison function that can be used with Array.prototype.sort().
  * @throws {Error} Throws an error if the property does not exist on one of the objects.
  */
-export function compareByProperty(property) {
+function compareByProperty(property) {
     return function(a, b) {
         if (a[property] === undefined || b[property] === undefined) {
             throw new Error(`Property "${property}" does not exist on one of the objects.`);
@@ -145,7 +145,7 @@ export function compareByProperty(property) {
  * @param {string} fileType The type of the file (e.g., 'csv', 'jpg', etc.).
  * @returns {Promise<string>} The path where the file was saved, including the file extension.
  */
-export async function downloadFile(fileURL, downloadPath, fileType) {
+async function downloadFile(fileURL, downloadPath, fileType) {
     try {
         // Construct the full URL with the file type and cache-busting parameter
         const fullURL = `${fileURL}.${fileType}?t=${new Date().getTime()}`;
@@ -179,7 +179,7 @@ export async function downloadFile(fileURL, downloadPath, fileType) {
  * @param {Array} values The array of values to sum.
  * @returns {number} The sum of the valid numbers in the array.
  */
-export function sumArray(values) {
+function sumArray(values) {
     return values.reduce((accumulator, currentValue) => {
         // Check if currentValue is a number
         if (typeof currentValue === 'number') {
@@ -195,7 +195,7 @@ export function sumArray(values) {
  * @returns {Object} An object containing statistical information, including mean, median, mode, range, variance, skewness, interquartile range, and quartiles.
  */
 
-export function analyzeArray(array) {
+function analyzeArray(array) {
     // Filter out non-numeric values
     const numericArray = array.filter(value => typeof value === 'number');
 
@@ -296,4 +296,18 @@ export function analyzeArray(array) {
         "skewness": skewness,
         "variance": variance,
     };
+}
+
+module.exports={
+    randomise,
+    truncate,
+    capitalise,
+    getKeyByValue,
+    getRandomNumber,
+    probability,
+    makeString,
+    compareByProperty,
+    downloadFile,
+    sumArray,
+    analyzeArray
 }
